@@ -21,4 +21,25 @@ class GraduationprojectItem(scrapy.Item):
     assess=scrapy.Field()
     desc=scrapy.Field()
     shop_url=scrapy.Field()
+
+    pass
+
+
+# 商品类型的 Item
+class ShopItem(scrapy.Item):
+    name=scrapy.Field()
+    ship_from_address=scrapy.Field()
+    vip=scrapy.Field()
+    main_business=scrapy.Field()
+    introduce=scrapy.Field()
+    address=scrapy.Field()
+    shop_url=scrapy.Field()
+    store_grade=scrapy.Field()
+    cumulative_turnover=scrapy.Field()
+    fans_counts=scrapy.Field()
+    average_shipping_speed=scrapy.Field()
+    after_sales_rate=scrapy.Field()
+    repurchase_rate=scrapy.Field()
+    average_refund_speed=scrapy.Field()
+    store_ratings=scrapy.Field()
     pass
