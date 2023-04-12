@@ -1,7 +1,7 @@
 // 可定义多个地址
 const model={
     // 本地接口地址
-    local:'http://localhost:8082'
+    local:'http://localhost:8083'
 }
 
 // 定义请求根路径

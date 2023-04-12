@@ -1,11 +1,13 @@
+import scrapy
 # 用来格式化时间的模块
-from datetime import datetime
 # 用来通过正则表达式来提取起批量的模块
 import re
+
 # 用来传递 item 对象
 from graduationProject.items import GraduationprojectItem
+# 获取商铺第一页内容
 from graduationProject.spiders.crawingShops.GetFirstPageShopInformation import GetFirstPageShopInformation
-import scrapy
+
 
 class SaveProduct:
 
@@ -16,33 +18,46 @@ class SaveProduct:
 
     # 到这里，已经是开始存储数据库了，这里爬取第一页至第二十页
     def saveProduct(self,response):
-        # try:
+        try:
             # 获得第三分类的名字
             third_level_name = response.meta['third_level_name']
+            # 获得成交额
+            turnover=response.meta['turnover']
 
             # 全部加 if ，是因为有个别的数据是一个空数组，而此时加 [0]，会导致报数组越界的异常，如果是空数组，则在 else 中进行置空
             # 商品名称
-            name = response.xpath(
-                '//div[@class="c-ctn"]//div[@class="supply-price-show"]//div[@class="d-t"]/text()').extract()
-            if name:
-                name = name[0]
+            pro_name = response.xpath(
+                '//div[@class="supply-price-show"]//div[@class="d-t"]/text()').extract()
+            if pro_name:
+                pro_name = pro_name[0]
+            else:
+                pro_name=''
             # 商品价格
             price = response.xpath(
-                '//div[@class="c-ctn"]//div[@class="supply-price-show"]//div[@class="active-p"]/text()').extract()
+                '//div[@class="supply-price-show"]//div[@class="active-p"]/text()').extract()
             if price:
                 price = price[0]
                 # 将价格变为 double 类型，xx.xx元或xx.xx-xx.xx元 --> xx.xx
                 price = float(price.split('-')[0].split('元')[0])
+            else:
+                price=0
             # 起批量
+            # start_batching = response.xpath(
+            #     '//div[@class="c-ctn"]//div[@class="supply-price-show"]//div[@class="line-val"]/text()').extract()
+            # 与前面的 pro_name、price 都省略了一样的前缀 //div[@class="c-ctn"]
             start_batching = response.xpath(
-                '//div[@class="c-ctn"]//div[@class="supply-price-show"]//div[@class="line-val"]/text()').extract()
+                '//div[@class="supply-price-show"]//div[@class="line-val"]/text()').extract()
             if start_batching:
                 start_batching = start_batching[0]
                 # 将起批量变为 int 类型，xx箱起批 --> xx
                 start_batching = int(re.findall('\d+', start_batching)[0])
+            else:
+                start_batching=-1
             # 更新时间
+            # update_time = response.xpath(
+            #     '//div[@class="c-ctn"]//div[@class="supply-price-show"]//div[@class="r-t"]/text()').extract()
             update_time = response.xpath(
-                '//div[@class="c-ctn"]//div[@class="supply-price-show"]//div[@class="r-t"]/text()').extract()
+                '//div[@class="supply-price-show"]//div[@class="r-t"]/text()').extract()
             if update_time:
                 update_time = update_time[0]
                 # 格式化时间，有时分秒的 datetime 格式，更新时间：2023年 03月11日 --> 2023-03-11 00:00:00
@@ -55,22 +70,28 @@ class SaveProduct:
                 '//div[@class="c-ctn"]//div[@class="con-bg"]/div[@class="batch-num mar flex-c"][1]//div[@class="line-val"]/text()').extract()
             if ship_from_address:
                 ship_from_address = ship_from_address[0]
+                shop_address_temp=ship_from_address
+                # 商品详细地址，给商品的表格使用
+                pro_address = ship_from_address
                 # 改发货地址的格式，由吉林省长春市二道区 --> 吉林，依靠前两个字符来确定是哪个省，如果精确到区级，会导致数量太多
                 ship_from_address = ship_from_address[0:2]
             # 采购热度
             purchasing_heat = response.xpath(
                 '//div[@class="c-ctn"]//div[@class="con-bg"]/div[@class="batch-num mar flex-c"]//div[@class="line-val flex-center"]//img').extract()
             # 根据数组求长度，即为火花的个数
-            purchasing_heat = len(purchasing_heat)
+            if purchasing_heat:
+                purchasing_heat = len(purchasing_heat)
+            else:
+                purchasing_heat=-1
             # 询价人数
             inquiry = response.xpath(
                 '//div[@class="c-ctn"]//div[@class="con-bg"]/div[@class="batch-num mar flex-c"]//div[@class="line-val"][1]//span/text()').extract()
             if inquiry:
                 inquiry = inquiry[0]
-                # 此时的询价人数，前后有空格，需要去空格
-                inquiry = inquiry.strip()
-                # 字符串类型转为 int 类型，6 --> 6
-                inquiry = int(inquiry)
+                # 此时的询价人数，前后有空格，需要去空格，字符串类型转为 int 类型，6 --> 6
+                inquiry = int(inquiry.strip())
+            else:
+                inquiry=-1
             # 成交人数
             traded = response.xpath(
                 '//div[@class="c-ctn"]//div[@class="con-bg"]/div[@class="batch-num mar flex-c"]//div[@class="line-val"][2]//span/text()').extract()
@@ -78,6 +99,8 @@ class SaveProduct:
                 traded = traded[0]
                 # 字符串类型转为 int 类型，6 --> 6
                 traded = int(traded)
+            else:
+                traded=-1
             # 评价人数
             assess = response.xpath(
                 '//div[@class="c-ctn"]//div[@class="con-bg"]/div[@class="batch-num mar flex-c"]//div[@class="line-val"][3]//span/text()').extract()
@@ -85,87 +108,57 @@ class SaveProduct:
                 assess = assess[0]
                 # 字符串类型转为 int 类型，6 --> 6
                 assess = int(assess)
-            # 描述
-            desc = response.xpath('//div[@class="com-bg"]//div[@class="detail-desc"]/text()').extract()
-            if desc:
-                desc = desc[0]
             else:
-                desc = response.xpath(
+                assess=-1
+            # 描述
+            pro_desc = response.xpath('//div[@class="com-bg"]//div[@class="detail-desc"]/text()').extract()
+            if pro_desc:
+                pro_desc = pro_desc[0]
+            else:
+                pro_desc = response.xpath(
                     '//div[@class="con-bg"]//div[@class="supply-price-show"]//div[@class="d-t"]/text()').extract()
-                if desc:
-                    desc = desc[0]
+                if pro_desc:
+                    pro_desc = pro_desc[0]
                 else:
-                    desc = None
+                    pro_desc =''
             # 商铺链接
             shop_url = response.xpath('//div[@class="shop-com"]//a/@href').extract()
             if shop_url:
                 shop_url = shop_url[0]
             if not shop_url.startswith('http'):
                 shop_url = 'https://www.cnhnb.com' + shop_url
+            # 商品链接（新增）
+            pro_url=response.url
+            # 收藏人数（新增）
+            collectors_counts = response.xpath('//div[@class="con-bg"]//div[@class="btn-item"]/text()').extract()
+            if collectors_counts:
+                collectors_counts = int(collectors_counts[0].split('应')[1].strip())
+            else:
+                collectors_counts = -1
+            # 店铺热度（新增）
+            shop_heat = response.xpath('//div[@class="content"]//div[@class="hot margin-top"]//img').extract()
+            if shop_heat:
+                shop_heat = len(shop_heat)
+            else:
+                shop_heat = -1
 
-            product = GraduationprojectItem(third_level_name=third_level_name, name=name,
-                                            price=price, start_batching=start_batching,
+            product = GraduationprojectItem(third_level_name=third_level_name, pro_name=pro_name,
+                                            price=price,turnover=turnover, start_batching=start_batching,
                                             update_time=update_time, ship_from_address=ship_from_address,
-                                            purchasing_heat=purchasing_heat, inquiry=inquiry,
-                                            traded=traded, assess=assess, desc=desc, shop_url=shop_url)
+                                            purchasing_heat=purchasing_heat,collectors_counts=collectors_counts
+                                            , inquiry=inquiry,traded=traded, assess=assess, pro_desc=pro_desc,
+                                            shop_url=shop_url,pro_url=pro_url,pro_address=pro_address)
             yield product
 
-            if shop_url.startswith('http'):
+            if shop_url.startswith('https://vip'):
                 yield scrapy.Request(url=shop_url, callback=self.getFirstPageShopInformation.getShopInformation,
-                                     meta={'vip': 1, 'ship_from_address': ship_from_address,'shop_url':shop_url},
+                                     meta={'is_vip': 1, 'ship_from_address': ship_from_address,'shop_url':shop_url,
+                                           'shop_heat':shop_heat,'shop_address_temp':shop_address_temp},
                                      dont_filter=True)
             else:
                 yield scrapy.Request(url=shop_url, callback=self.getFirstPageShopInformation.getShopInformation,
-                                     meta={'vip': 0, 'ship_from_address': ship_from_address,'shop_url':shop_url},
+                                     meta={'is_vip': 0, 'ship_from_address': ship_from_address,'shop_url':shop_url,
+                                           'shop_heat':shop_heat,'shop_address_temp':shop_address_temp},
                                      dont_filter=True)
-        # except:
-        #     pass
-
-
-
-        # 考虑在此的原因是因为需要重新打开一个数据库链接和关闭数据库连接，会耗费性能，因此特地设置在此进行插入的测试
-        # 因为最终不能根据已经出来的数据进行爬取，所以最后在这里增加爬取商铺信息的判断，新建一个临时表，里面插入商铺的链接，如果插入成功，
-        # 则爬取商铺，代表此商铺没有重复，如果插入失败，则代表该商品已经被爬取完，则不需要爬取
-        # try:
-        #     sql = 'insert into flag values(‘{}’)'.format(shop_url)
-        # # 异常，不用爬取
-        # except:
-        #     pass
-        # # 没异常，需要查取
-        # else:
-        #     headers = {
-        #         'USER_AGENT': self.settings.get('USER_AGENT')
-        #     }
-        #     get_shop_url=shop_url
-        #     if get_shop_url.startswith('http'):
-        #         getFirstPageShopInformation=GetFirstPageShopInformation()
-        #         yield scrapy.Request(url=get_shop_url,callback=getFirstPageShopInformation.getShopInformation,meta={'vip':1,'ship_from_address':ship_from_address}, dont_filter=True,headers=headers)
-        #     else:
-        #         getFirstPageShopInformation = GetFirstPageShopInformation()
-        #         get_shop_url='https://www.cnhnb.com'+get_shop_url
-        #         yield scrapy.Request(url=get_shop_url,callback=getFirstPageShopInformation.getShopInformation,meta={'vip':0,'ship_from_address':ship_from_address}, dont_filter=True,headers=headers)
-        #     pass
-
-
-        # print('商品名称')
-        # print(name)
-        # print('商品价格')
-        # print(price)
-        # print('起批量')
-        # print(start_batching)
-        # print('更新时间')
-        # print(update_time)
-        # print('发货地址')
-        # print(ship_from_address)
-        # print('采购热度')
-        # print(purchasing_heat)
-        # print('询价人数')
-        # print(inquiry)
-        # print('成交人数')
-        # print(traded)
-        # print('评价人数')
-        # print(assess)
-        # print('描述')
-        # print(desc)
-        # print('商铺链接')
-        # print(show_url)
+        except:
+            pass

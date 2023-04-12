@@ -1,8 +1,9 @@
-import time
-
 import scrapy
+# import time
 
+# 存储商品信息
 from graduationProject.spiders.crawling.SaveProduct import SaveProduct
+
 
 class ProductListLessThan20:
 
@@ -13,13 +14,12 @@ class ProductListLessThan20:
 
 
     def getProduct(self,response):
-        # try:
+        try:
             # 获得第三分类的名字
             third_level_name = response.meta['third_level_name']
             # 获取一共有多少页，此时是从第二页开始的，并且总页数是低于 20 的，此时的 last_item 是最后的总页数
-            last_item = response.xpath('//div[@class="l-bg"]//div[@class="pagination-bg"]//a[last()]/text()').extract()
-            if last_item:
-                last_item = last_item[0]
+            # 不需要判断再取 [0]，能进来就说明有，没有的在上一级就报错不执行了
+            last_item = response.xpath('//div[@class="l-bg"]//div[@class="pagination-bg"]//a[last()]/text()').extract()[0]
 
             # 定义基准链接
             base_url = response.url
@@ -30,48 +30,64 @@ class ProductListLessThan20:
             # 此后到 for 之前为止，都是爬取第二页的数据
             # 设置爬取具体商品的基准链接
             second_base_url = 'https://www.cnhnb.com'
-            # 获取第二页的所有商品的链接
-            all_list = response.xpath('//div[@class="supply-list"]//div[@class="supply-item"]//a//@href').extract()
+            # 获取第二页的所有商品的链接，因为现在后面加了成交额，所以将 xpath 提前一个等级
+            all_list = response.xpath('//div[@class="supply-list"]//div[@class="supply-item"]')
             for item in all_list:
-                url = second_base_url + item
+                url = second_base_url + item.xpath('.//a//@href').extract()[0]
                 # time.sleep(1)
+                turnover=item.xpath('.//div[@class="turnover"]/text()').extract()
+                if turnover:
+                    # 获得成交额，此时有空格（剪切不用担心）
+                    turnover=turnover[0]
+                    # 判断是否超过万
+                    if '万' in turnover:
+                        turnover=float(turnover.split('交')[1].split('万')[0])*10000
+                    else:
+                        turnover=float(turnover.split('交')[1].split('元')[0])
+                else:
+                    turnover=0
 
                 # time.sleep(0.2)
                 yield scrapy.Request(url=url, callback=self.save_product.saveProduct,
-                                     meta={'third_level_name': third_level_name}, dont_filter=True)
+                                     meta={'third_level_name': third_level_name,'turnover':turnover}, dont_filter=True)
 
             # 使用 for 循环爬取后面页数的代码，确保大于 3 页
             if int(last_item) > 2:
-                print(last_item)
+                # print(last_item)
                 for page in range(3, int(last_item) + 1):
                     # 要使用 str() ，python 不能字符串和数字自动转换拼接
                     url = base_url + str(page)
                     # time.sleep(0.2)
                     yield scrapy.Request(url=url, callback=self.getPages,
                                          meta={'third_level_name': third_level_name}, dont_filter=True)
-        # except:
-        #     pass
+        except:
+            pass
 
     # 爬取第三页及以后的数据
     def getPages(self, response):
-        # try:
+        try:
             # 获得第三分类的名字
             third_level_name = response.meta['third_level_name']
             # 设置基准链接
             base_url = 'https://www.cnhnb.com'
-            # 获取每页的所有商品的链接
-            all_list = response.xpath('//div[@class="supply-list"]//div[@class="supply-item"]//a//@href').extract()
+            # 获取每页的所有商品的链接，因为现在后面加了成交额，所以将 xpath 提前一个等级
+            all_list = response.xpath('//div[@class="supply-list"]//div[@class="supply-item"]')
             for item in all_list:
-                url = base_url + item
+                url = base_url + item.xpath('.//a//@href').extract()[0]
+                turnover=item.xpath('.//div[@class="turnover"]/text()').extract()
+                if turnover:
+                    # 获得成交额，此时有空格（剪切不用担心）
+                    turnover=turnover[0]
+                    # 判断是否超过万
+                    if '万' in turnover:
+                        turnover=float(turnover.split('交')[1].split('万')[0])*10000
+                    else:
+                        turnover=float(turnover.split('交')[1].split('元')[0])
+                else:
+                    turnover=0
 
                 # time.sleep(0.2)
                 yield scrapy.Request(url=url, callback=self.save_product.saveProduct,
-                                     meta={'third_level_name': third_level_name}, dont_filter=True)
-        # except:
-        #     pass
-
-    # def getPageProduct(self,response):
-    #     # 获得第三分类的名字
-    #     third_level_name=response.meta['third_level_name']
-    #     print(response)
-    #     pass
+                                     meta={'third_level_name': third_level_name,'turnover':turnover}, dont_filter=True)
+        except:
+            pass

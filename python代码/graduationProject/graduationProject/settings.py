@@ -13,7 +13,7 @@ SPIDER_MODULES = ['graduationProject.spiders']
 NEWSPIDER_MODULE = 'graduationProject.spiders'
 
 # 解决爬取遗漏问题
-# AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = True
 
 # 设置请求头
 HEADERS =[
@@ -30,7 +30,7 @@ HEADERS =[
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 # 设置日志
-LOG_FILE='logText.log'
+# LOG_FILE='logText.log'
 # REQUEST_FINGERPRINTER_IMPLEMENTATION = 'scrapy.utils.request.fingerprint.RequestFingerprint'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
