@@ -18,7 +18,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { initTotalCounts } from "../../js/middle/totalNumber";
+import { initTotalCounts } from "../../js/middle/totalCounts";
 
 onMounted(() => {
   const productTotalCounts = document.getElementById("productTotalCounts");

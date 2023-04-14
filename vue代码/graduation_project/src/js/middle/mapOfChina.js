@@ -40,8 +40,8 @@ export async function initMap(container) {
       { name: "新疆", value: result[30].counts },
       { name: "香港", value: result[31].counts },
       { name: "澳门", value: result[32].counts },
-      // { name: "台湾", value: result[33].counts },
-      { name: "台湾", value: 0 }
+      { name: "台湾", value: result[33].counts },
+      // { name: "台湾", value: 0 }
     ]
     const myChart = echarts.init(container);
     const option = {

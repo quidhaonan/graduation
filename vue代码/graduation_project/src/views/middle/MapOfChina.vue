@@ -10,7 +10,7 @@
 <script setup>
 import '../../js/flexible'
 import { onMounted } from "vue";
-import {initMap} from '../../js/middle/map.js'
+import {initMap} from '../../js/middle/mapOfChina.js'
 
 onMounted(() => {
   const map=document.getElementById('chart')

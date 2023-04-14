@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmyxlf.mapper.middle.MapOfChinaMapper">
+
+    <!--
+        获得每个省市农产品的数量，制作中国地图
+    -->
+    <select id="getTheNumberOfAgriculturalProductsInTheProvinceAndCity" resultType="mapOfChina">
+        select province_id,province_name,counts from (select ship_from_address,count(*) counts from
+            product group by ship_from_address order by ship_from_address)  address left join province
+            on address.ship_from_address=province.province_id order by province_id
+    </select>
+</mapper>

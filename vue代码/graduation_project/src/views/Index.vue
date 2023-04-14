@@ -9,8 +9,8 @@
       <AllLevelTurnover />
     </div>
     <div class="column">
-      <TotalNumber />
-      <Map></Map>
+      <TotalCounts />
+      <MapOfChina/>
     </div>
     <div class="column">
       <StartBatchingRelationship />
@@ -33,9 +33,9 @@
 import "../js/flexible";
 import TopTitle from "../views/header/TopTitle.vue";
 import ShowTime from "../views/header/ShowTime.vue";
-import TotalNumber from "../views/middle/TotalNumber.vue";
+import TotalCounts from "./middle/TotalCounts.vue";
 // import HelloWorld from "../components/HelloWorld.vue";
-import Map from "../views/middle/Map.vue";
+import MapOfChina from "../views/middle/MapOfChina.vue";
 import FirstLevelCounts from "../views/leftAndRight/AllLevelCounts.vue";
 import PurchasingHeat from "../views/leftAndRight/PurchasingHeat.vue";
 import StartBatchingRelationship from "../views/leftAndRight/StartBatchingRelationship.vue";

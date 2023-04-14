@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmyxlf.mapper.leftAndRight.AllLevelTurnoverMapper">
+
+    <!--
+        获取第一级分类的信息
+    -->
+    <select id="getFirstLevelTurnover" resultType="allLevelTurnover">
+        select level_no, level_name, turnover, round(turnover / total_turnover * 100,2)  percent from (select
+            new_table1.first_no level_no,new_table1.first_name level_name,sum(new_table2.temp_turnover) turnover
+            from (select first_level.level_no first_no,first_level.level_name first_name,third_level.level_no
+            third_no from first_level left join second_level on first_level.level_no=second_level.first_level_no
+            left join third_level on second_level.level_no=third_level.second_level_no) new_table1 left join
+            (select third_level,sum(turnover) temp_turnover from product group by third_level) new_table2 on
+            new_table1.third_no=new_table2.third_level group by new_table1.first_no order by new_table1.first_no)
+            new_table2,(select sum(turnover) total_turnover from product) new_table3
+    </select>
+
+    <!--
+        获取第二级分类的信息
+    -->
+    <select id="getSecondLevelTurnover" parameterType="Integer" resultType="allLevelTurnover">
+        select level_no,level_name,turnover,round(turnover / total_turnover * 100,2)  percent from (select
+            second_level.level_no,second_level.level_name,turnover from (SELECT second_level_no,sum(temp_turnover)
+            turnover from (select * from third_level where second_level_no in (select level_no from second_level
+            where first_level_no=#{levelNo})) new_table1 left join (select third_level,sum(turnover) temp_turnover from
+            product GROUP BY third_level) new_table2 on new_table1.level_no=new_table2.third_level group BY
+            second_level_no) new_table3 left join second_level on new_table3.second_level_no=second_level.level_no
+            order by level_no) new_table4,(select sum(turnover) total_turnover from product where third_level in
+            (select level_no from third_level where second_level_no in (select level_no from second_level where
+            first_level_no=#{levelNo}))) new_table5
+    </select>
+
+    <!--
+        获取第三级分类的信息，提供信息给玫瑰图
+    -->
+    <select id="getThirdLevelTurnover" parameterType="String" resultType="allLevelTurnover">
+        select level_no,level_name,sum(turnover) turnover from (select * from third_level where
+            second_level_no=(select level_no from second_level where level_name=#{levelName})) new_table1
+            left join product  on new_table1.level_no=product.third_level group by level_no order by level_no
+    </select>
+
+</mapper>

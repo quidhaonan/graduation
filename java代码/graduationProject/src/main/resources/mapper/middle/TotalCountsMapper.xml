@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmyxlf.mapper.middle.TotalCountsMapper">
+
+    <!--
+        获取农产品与商铺的总数量
+    -->
+    <select id="getTotalCounts" resultType="totalCounts">
+        select 1 as id,'农产品总数' as `name`, count(*) as total_counts from product union all select 2 as
+            id,'商铺总数' as `name`, count(*) as total_counts from shop
+    </select>
+</mapper>

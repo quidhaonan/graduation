@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmyxlf.mapper.bigPicture.ShopScatterPlotMapper">
+
+    <!--
+        获得商铺表的所有商铺（共 12 个字段，其中包含商铺表能数字化比较的 10 个字段）
+    -->
+    <select id="getShopScatterPlot" resultMap="shopScatterPlotMap">
+        select id,`name`,province_id,is_vip,shop_heat,shop_grade,cumulative_turnover,fans_counts,
+            average_shipping_speed,after_sales_rate,repurchase_rate,shop_ratings from shop
+    </select>
+    <!--
+        将数据库 varchar 类型的数据转为 Double 类型
+    -->
+    <resultMap id="shopScatterPlotMap" type="shopScatterPlot">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="isVip" column="is_vip"/>
+        <result property="shopHeat" column="shop_heat"/>
+        <result property="shopGrade" column="shop_grade"/>
+        <result property="cumulativeTurnover" column="cumulative_turnover"/>
+        <result property="fansCounts" column="fans_counts"/>
+        <result property="averageShippingSpeed" column="average_shipping_speed" typeHandler="com.lmyxlf.config.PercentageDoubleTypeHandler"/>
+        <result property="afterSalesRate" column="after_sales_rate" typeHandler="com.lmyxlf.config.PercentageDoubleTypeHandler"/>
+        <result property="repurchaseRate" column="repurchase_rate" typeHandler="com.lmyxlf.config.PercentageDoubleTypeHandler"/>
+        <result property="shopRatings" column="shop_ratings"/>
+    </resultMap>
+</mapper>

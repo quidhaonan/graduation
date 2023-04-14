@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/graduation?characterEncoding=utf8
+    username: root
+    password:
+
+mybatis:
+  type-aliases-package: com.lmyxlf.entity
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  configuration:
+    # 将数据库中以下划线分隔的字段名映射到实体类中以驼峰命名方式表示的属性名
+    map-underscore-to-camel-case: true
