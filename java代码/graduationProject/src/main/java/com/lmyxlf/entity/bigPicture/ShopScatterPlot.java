@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.io.Serializable;
 
 /**
  * 商铺散点图分析（共存储 12 个字段，其中包含商铺表能数字化比较的 10 个字段）
@@ -16,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Data
 @ToString
-public class ShopScatterPlot implements Serializable {
+public class ShopScatterPlot {
     /**
      * ID
      */
@@ -37,10 +36,6 @@ public class ShopScatterPlot implements Serializable {
      * 商铺热度
      */
     private Integer shopHeat;
-    /**
-     * 商铺等级
-     */
-    private Integer shopGrade;
     /**
      * 累计营业额
      */

@@ -1,6 +1,7 @@
 import * as echarts from 'echarts'
 import 'echarts-gl'
-import { $post } from '../../utils/request'
+import { $get } from '../../utils/request'
+
 
 // 将配置定义在外面，便于将两个函数分开
 let config
@@ -23,18 +24,17 @@ export async function initShopScatterPlot(shopScatterPlotDom) {
         id: 16
     };
     var schema = [
-        { name: '店铺ID', index: 0 },
-        { name: '店铺名称', index: 1 },
-        { name: '店铺地区', index: 2 },
+        { name: '商铺ID', index: 0 },
+        { name: '商铺名称', index: 1 },
+        { name: '商铺地区', index: 2 },
         { name: '是否是VIP', index: 3 },
-        { name: '店铺热度', index: 4 },
-        { name: '店铺等级', index: 5 },
-        { name: '店铺总营业额', index: 6 },
-        { name: '店铺粉丝数', index: 7 },
-        { name: '平均发货速度', index: 8 },
-        { name: '售后率', index: 9 },
-        { name: '复购率', index: 10 },
-        { name: '店铺评分', index: 11 },
+        { name: '商铺热度', index: 4 },
+        { name: '商铺总营业额', index: 5 },
+        { name: '商铺粉丝数', index: 6 },
+        { name: '平均发货速度', index: 7 },
+        { name: '售后率', index: 8 },
+        { name: '复购率', index: 9 },
+        { name: '商铺评分', index: 10 },
     ];
     var data;
     var fieldIndices = schema.reduce(function (obj, item) {
@@ -64,11 +64,11 @@ export async function initShopScatterPlot(shopScatterPlotDom) {
         };
     }
     config = (app.config = {
-        xAxis3D: '店铺总营业额',
-        yAxis3D: '店铺地区',
+        xAxis3D: '商铺总营业额',
+        yAxis3D: '商铺地区',
         zAxis3D: '是否是VIP',
-        color: '店铺地区',
-        symbolSize: '店铺评分',
+        color: '商铺地区',
+        symbolSize: '商铺评分',
         onChange: function () {
             var max = getMaxOnExtent(data);
 
@@ -124,7 +124,7 @@ export async function initShopScatterPlot(shopScatterPlotDom) {
         };
     });
 
-    $post('/getShopScatterPlot').then((_data)=>{
+    $get('/bigPicture/shopScatterPlot').then((_data)=>{
         data = _data;
         var max = getMaxOnExtent(data);
         myChart.setOption({
@@ -232,29 +232,60 @@ export async function initShopScatterPlot(shopScatterPlotDom) {
                             const selectZDom=document.getElementById('selectZ')
                             const selectCDom=document.getElementById('selectC')
                             const selectSDom=document.getElementById('selectS')
-                            let str=`<table><tr><th>${data[params.dataIndex][1]}</th></tr>`
+                            let str=`<table>
+                                        <tr>
+                                            <th>${data[params.dataIndex][1]}</th>
+                                        </tr>`
                             let index
                             const array=[selectXDom.value,selectYDom.value,selectZDom.value,selectCDom.value,selectSDom.value]
                             // 对获得的值进行去重
                             const set=new Set(array)
                             set.forEach((item)=>{
                                 index=array.indexOf(item)
-                                if(item=='店铺地区'){
-                                    str=str+'<tr><td>'+array[index]+'：</td><td>'+province[params.data[index]]+'</td></tr>'
+                                if(item=='商铺地区'){
+                                    str=str+`
+                                            <tr>
+                                                <td>${array[index]}</td>
+                                                <td>：${province[params.data[index]]}</td>
+                                            </tr>
+                                            `
                                 }else if(item=='是否是VIP'){
                                     let isVip=params.data[index]==1?'是':'否'
-                                    str=str+'<tr><td>'+array[index]+'：</td><td>'+isVip+'</td></tr>'
-                                }else if(item=='店铺等级'){
-                                    str=str+'<tr><td>'+array[index]+'：</td><td>'+params.data[index]+'级</td></tr>'
-                                }else if(item=='店铺总营业额'){
-                                    str=str+'<tr><td>'+array[index]+'：</td><td>'+params.data[index]+'元</td></tr>'
+                                    str=str+`
+                                            <tr>
+                                             <td>${array[index]}</td>
+                                             <td>：${isVip}</td>
+                                            </tr>
+                                            `
+                                }else if(item=='商铺总营业额'){
+                                    str=str+`
+                                            <tr>
+                                                <td>${array[index]}</td>
+                                                <td>：${params.data[index]}元</td>
+                                            </tr>
+                                            `
                                 }else if(item=='平均发货速度'){
-                                    str=str+'<tr><td>'+array[index]+'：</td><td>'+params.data[index]+'h</td></tr>'
+                                    str=str+`
+                                            <tr>
+                                                <td>${array[index]}</td>
+                                                <td>：${params.data[index]}h</td>
+                                            </tr>
+                                            `
                                 }else if(item=='售后率' || item=='复购率'){
-                                    str=str+'<tr><td>'+array[index]+'：</td><td>'+params.data[index]+'%</td></tr>'
-                                }else if(item=='店铺评分' || item=='店铺热度' || item=='店铺粉丝数'){
+                                    str=str+`
+                                            <tr>
+                                                <td>${array[index]}</td>
+                                                <td>：${params.data[index]}%</td>
+                                            </tr>
+                                            `
+                                }else if(item=='商铺评分' || item=='商铺热度' || item=='商铺粉丝数'){
                                     // 没做什么添加
-                                    str=str+'<tr><td>'+array[index]+'：</td><td>'+params.data[index]+'</td></tr>'
+                                    str=str+`
+                                            <tr>
+                                                <td>${array[index]}</td>
+                                                <td>：${params.data[index]}</td>
+                                            </tr>
+                                            `
                                 }
                             })
                             str=str+'</table>'
@@ -277,6 +308,7 @@ export async function initSelect(selectXDom,selectYDom,selectZDom,selectCDom,sel
         const selectedIndex = selectXDom.selectedIndex;
         const selectedOption = selectXDom.options[selectedIndex];
         const selectedValue = selectedOption.value
+
         config.xAxis3D=selectedValue
         config.onChange()
     })
@@ -317,4 +349,3 @@ export async function initSelect(selectXDom,selectYDom,selectZDom,selectCDom,sel
         config.onChange()
     })
 }
-

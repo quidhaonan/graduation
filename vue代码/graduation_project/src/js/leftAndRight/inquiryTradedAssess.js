@@ -1,6 +1,7 @@
 import * as echarts from 'echarts'
 import { $post } from "../../utils/request"
 
+
 // 加载询价、成交、评价的数据
 export async function initInquiryTradedAssess(leftDom,middleDom,rightDom) {
     const left = echarts.init(leftDom)

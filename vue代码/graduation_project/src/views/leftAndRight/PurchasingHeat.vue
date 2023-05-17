@@ -22,9 +22,6 @@ onMounted(() => {
 
 <style scoped>
 #purchasingHeat {
-  /* border: 1px solid red; */
-  /* height: 600px; 
-  width: 600px; */
   height: 100%;
   width: 100%;
   margin-top: -40px;

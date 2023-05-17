@@ -1,5 +1,6 @@
 import * as echarts from "echarts"
-import { $post } from "../../utils/request"
+import { $get } from "../../utils/request"
+
 
 // 如果 initFirstLevel 调用 initRoseDiagram 的话，就获取不到显示玫瑰图的容器
 // 因此打算在 initFirstLevel 的方法中给该属性赋值键盘事件，以便 initRoseDiagram 使用
@@ -7,7 +8,7 @@ let $event
 
 // 加载第一第二级分类的数据
 export async function initFirstLevel(secondLevelCounts, autoClick) {
-    let firstLevelCounts = await $post('/getFirstLevelCounts')
+    let firstLevelCounts = await $get('/leftAndRight/firstLevelCounts')
     // 存放第二级的占比
     let percents = []
 
@@ -80,7 +81,7 @@ export async function initFirstLevel(secondLevelCounts, autoClick) {
                 },
                 {
                     value: firstLevelCounts[6].counts,
-                    groupId: firstLevelCounts[6].firstNo,
+                    groupId: firstLevelCounts[6].levelNo,
                     percent: firstLevelCounts[6].percent
                 },
                 {
@@ -120,8 +121,24 @@ export async function initFirstLevel(secondLevelCounts, autoClick) {
                     // params[0].dataIndex，获取当前数据在 data 数组中的索引
                     percent = percents[params[0].dataIndex] + '%'
                 }
+                let result=`
+                            <table>
+                                <tr>
+                                    <td>${params[0].seriesName}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>${params[0].name}</td>
+                                    <td>：${value}</td>
+                                </tr>
+                                <tr>
+                                    <td>占比</td>
+                                    <td>：${percent}</td>
+                                </tr>
+                            </table>
+                            `
 
-                return '<table><tr><td>' + params[0].seriesName + '</td><td></td></tr><tr><td>' + params[0].name + '</td><td> : ' + value + '</td></tr><tr><td>' + '占比</td><td> : ' + percent + '</td></tr></table>'
+                return result
             }
         },
         // 柱子颜色
@@ -137,7 +154,7 @@ export async function initFirstLevel(secondLevelCounts, autoClick) {
             // 判断是否有 groupId 这个值，来决定是否请求 ajax（最后一级的时候没有该属性）
             if (event.data.groupId) {
                 // 第二层的数据向后台请求
-                let secondLevelCounts = await $post('/getSecondLevelCounts', { 'firstNo': event.data.groupId })
+                let secondLevelCounts = await $get('/leftAndRight/secondLevelCounts/'+event.data.groupId)
                 // 存放第二级的占比情况
                 percents = []
 
@@ -213,11 +230,11 @@ export async function initFirstLevel(secondLevelCounts, autoClick) {
 
 // 加载玫瑰图
 export async function initRoseDiagram() {
-    let thirdLevelCounts = await $post('/getThirdLevelCounts', { 'levelName': $event.name })
+    let thirdLevelCounts = await $get('/leftAndRight/thirdLevelCounts/'+$event.name)
 
     const option = {
         title: {
-            text: '农产品数量',
+            // text: '农产品数量',
             // subtext: 'Fake Data',
             left: 'center'
         },

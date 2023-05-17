@@ -24,7 +24,6 @@ onMounted(() => {
 
 <style lang="less" scoped>
 #container {
-  // border: 1px solid red;
   display: flex;
   justify-content: space-between;
   margin-top: -40px;

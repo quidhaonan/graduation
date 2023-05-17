@@ -1,13 +1,13 @@
 package com.lmyxlf.service.middle.impl;
 
+import com.lmyxlf.annotation.RedisAnnotation;
 import com.lmyxlf.entity.middle.MapOfChina;
 import com.lmyxlf.mapper.middle.MapOfChinaMapper;
 import com.lmyxlf.service.middle.MapOfChinaService;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.List;
+
 
 /**
  * 每个省市农产品的数量分析的服务类接口的实现类
@@ -18,8 +18,6 @@ import java.util.List;
 public class MapOfChinaServiceImpl implements MapOfChinaService {
     @Resource
     private MapOfChinaMapper mapOfChinaMapper;
-    @Resource
-    private RedisTemplate<String,List<MapOfChina>> redisTemplate;
 
     /**
      * 获得每个省市农产品的数量，制作中国地图
@@ -27,20 +25,8 @@ public class MapOfChinaServiceImpl implements MapOfChinaService {
      * @return 符合要求的 MapOfChina 对象集合
      */
     @Override
+    @RedisAnnotation({"theNumberOfAgriculturalProductsInTheProvinceAndCity"})
     public List<MapOfChina> getTheNumberOfAgriculturalProductsInTheProvinceAndCity() {
-        // 查 redis 缓存
-        List<MapOfChina> cache = redisTemplate.opsForValue().get("theNumberOfAgriculturalProductsInTheProvinceAndCity");
-        if(cache!=null){
-            System.out.println("MapOfChinaServiceImpl-getTheNumberOfAgriculturalProductsInTheProvinceAndCity-->YES");
-            return cache;
-        }
-
-        List<MapOfChina> theNumberOfAgriculturalProductsInTheProvinceAndCity =
-                mapOfChinaMapper.getTheNumberOfAgriculturalProductsInTheProvinceAndCity();
-        System.out.println("MapOfChinaServiceImpl-getTheNumberOfAgriculturalProductsInTheProvinceAndCity-->没走缓存-->No");
-        // 添加 redis 缓存
-        redisTemplate.opsForValue().set("theNumberOfAgriculturalProductsInTheProvinceAndCity",
-                theNumberOfAgriculturalProductsInTheProvinceAndCity);
-        return theNumberOfAgriculturalProductsInTheProvinceAndCity;
+        return mapOfChinaMapper.getTheNumberOfAgriculturalProductsInTheProvinceAndCity();
     }
 }

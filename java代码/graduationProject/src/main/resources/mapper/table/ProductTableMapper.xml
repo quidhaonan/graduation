@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmyxlf.mapper.table.ProductTableMapper">
+    <!--
+        获取农产品详细信息
+    -->
+    <select id="getProductTableInformation" parameterType="selectProduct" resultMap="productTableResultMap">
+        <include refid="productTableInformation"/>
+    </select>
+
+    <!--
+        获得符合要求的农产品个数，select product.id 用来优化速度，不必查询多个字段
+    -->
+    <select id="getTotalCounts" parameterType="selectProduct" resultType="Integer">
+        select count(*) from (select product.id from product left join third_level on
+            product.third_level=third_level.level_no
+            <include refid="queryCriteria"/>) new_table1
+    </select>
+
+    <!--
+        临时存储 sql ，以便后面求出符合要求的农产品个数
+    -->
+    <sql id="productTableInformation">
+        select product.*,third_level.level_name from product left join third_level on
+            product.third_level=third_level.level_no
+            <include refid="queryCriteria"/>
+    </sql>
+
+    <!--
+        存放查询条件
+    -->
+    <sql id="queryCriteria">
+        <where>
+            <if test="input!=null and input!=''">
+                and pro_name like concat('%',#{input},'%')
+            </if>
+            <!-- 判断数组长度是否大于0，大于0则拼接 in 条件 -->
+            <if test="shipFromAddress != null and shipFromAddress.length > 0">
+                and ship_from_address in
+                <foreach collection="shipFromAddress" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+
+        <if test="price=='ascending'">
+            order by price asc
+        </if>
+        <if test="price=='descending'">
+            order by price desc
+        </if>
+
+        <if test="collectorsCounts=='ascending'">
+            order by collectors_counts asc
+        </if>
+        <if test="collectorsCounts=='descending'">
+            order by collectors_counts desc
+        </if>
+
+        <if test="turnover=='ascending'">
+            order by turnover asc
+        </if>
+        <if test="turnover=='descending'">
+            order by turnover desc
+        </if>
+    </sql>
+
+    <!--
+        给 updateTime 属性增加指定的 typeHandler 日期格式化处理程序
+    -->
+    <resultMap id="productTableResultMap" type="productTable">
+        <result property="updateTime" column="update_time" typeHandler="com.lmyxlf.config.DateTypeHandler" />
+    </resultMap>
+</mapper>

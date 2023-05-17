@@ -14,7 +14,7 @@ export async function initTitle(titleDom) {
                     left: 'center',
                     top: 'center',
                     style: {
-                        text: '惠农网分析',
+                        text: '惠农网农产品交易数据',
                         // fontSize: 20,
                         fontSize: fontSize,
                         // fontWeight: 'bold',

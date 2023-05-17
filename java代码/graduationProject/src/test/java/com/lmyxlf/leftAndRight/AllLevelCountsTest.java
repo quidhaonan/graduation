@@ -5,9 +5,9 @@ import com.lmyxlf.mapper.leftAndRight.AllLevelCountsMapper;
 import com.lmyxlf.service.leftAndRight.AllLevelCountsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import javax.annotation.Resource;
 import java.util.List;
+
 
 @SpringBootTest
 public class AllLevelCountsTest {

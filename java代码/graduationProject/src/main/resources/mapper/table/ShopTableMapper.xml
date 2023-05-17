@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmyxlf.mapper.table.ShopTableMapper">
+    <!--
+        获取商铺详细信息
+    -->
+    <select id="getShopTableInformation" parameterType="selectShop" resultMap="shopTableResultMap">
+        select new_table1.*,
+            <include refid="product"/>,
+            level_name from (select * from shop
+            <include refid="queryCriteria"/>
+            limit #{currentPage},#{pageSize}) new_table1 left join product on
+            new_table1.shop_url=product.shop_url left join third_level on
+            product.third_level=third_level.level_no
+    </select>
+
+    <!--
+        获得符合要求的商铺个数
+    -->
+    <select id="getTotalCounts" parameterType="selectShop"  resultType="Integer">
+        select count(*) from shop <include refid="queryCriteria"/>
+    </select>
+
+    <!--
+        解决联合查询的键重合问题（为农产品表的用不上，但是会导致报错的字段起别名）
+            id 、 address 、 shop_url
+    -->
+    <sql id="product">
+        product.id pro_id,product.third_level,product.pro_name,product.price,product.turnover,
+            product.start_batching,product.update_time, product.ship_from_address,product.address pro_address,
+            product.purchasing_heat,product.collectors_counts,product.inquiry,product.traded,product.assess,
+            product.pro_desc,product.pro_url,product.shop_url pro_shop_url
+    </sql>
+
+    <!--
+        存放查询条件
+    -->
+    <sql id="queryCriteria">
+        <where>
+            <if test="input!=null and input!=''">
+                and name like concat('%',#{input},'%')
+            </if>
+            <!-- 判断数组长度是否大于0，大于0则拼接 in 条件 -->
+            <if test="provinceId!=null and provinceId.length>0">
+                and province_id in
+                <foreach collection="provinceId" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="isVip!=null and isVip.length>0">
+                and is_vip in
+                <foreach collection="isVip" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+
+        <if test="cumulativeTurnover=='ascending'">
+            order by cumulative_turnover asc
+        </if>
+        <if test="cumulativeTurnover=='descending'">
+            order by cumulative_turnover desc
+        </if>
+
+        <if test="fansCounts=='ascending'">
+            order by fans_counts asc
+        </if>
+        <if test="fansCounts=='descending'">
+            order by fans_counts desc
+        </if>
+    </sql>
+
+    <!--
+        自定义映射关系
+    -->
+    <resultMap id="shopTableResultMap" type="ShopTable">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="isVip" column="is_vip"/>
+        <result property="mainBusiness" column="main_business"/>
+        <result property="shopDesc" column="shop_desc"/>
+        <result property="address" column="address"/>
+        <result property="shopUrl" column="shop_url"/>
+        <result property="shopHeat" column="shop_heat"/>
+        <result property="shopGrade" column="shop_grade"/>
+        <result property="cumulativeTurnover" column="cumulative_turnover"/>
+        <result property="fansCounts" column="fans_counts"/>
+        <result property="averageShippingSpeed" column="average_shipping_speed"/>
+        <result property="afterSalesRate" column="after_sales_rate"/>
+        <result property="repurchaseRate" column="repurchase_rate"/>
+        <result property="shopRatings" column="shop_ratings"/>
+        <collection property="productTable" ofType="ProductTable">
+            <id property="id" column="pro_id"/>
+            <result property="proName" column="pro_name"/>
+            <result property="price" column="price"/>
+            <result property="shipFromAddress" column="ship_from_address"/>
+            <result property="address" column="address"/>
+            <result property="collectorsCounts" column="collectors_counts"/>
+            <result property="turnover" column="turnover"/>
+            <result property="proUrl" column="pro_url"/>
+            <result property="shopUrl" column="shop_url"/>
+            <result property="totalCounts" column="total_counts"/>
+            <result property="thirdLevel" column="third_level"/>
+            <result property="levelName" column="level_name"/>
+            <result property="purchasingHeat" column="purchasing_heat"/>
+            <result property="inquiry" column="inquiry"/>
+            <result property="traded" column="traded"/>
+            <result property="assess" column="assess"/>
+            <result property="startBatching" column="start_batching"/>
+            <result property="updateTime" column="update_time"  typeHandler="com.lmyxlf.config.DateTypeHandler"/>
+            <result property="proDesc" column="pro_desc"/>
+        </collection>
+    </resultMap>
+</mapper>

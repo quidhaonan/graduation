@@ -1,9 +1,8 @@
 package com.lmyxlf.service.leftAndRight;
 
 import com.lmyxlf.entity.leftAndRight.AllLevelTurnover;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+
 
 /**
  * 每种农产品分类下的农产品营业额分析的服务类接口
@@ -11,7 +10,6 @@ import java.util.List;
  * @author lmy
  */
 public interface AllLevelTurnoverService {
-
     /**
      * 获取第一级分类的信息
      *

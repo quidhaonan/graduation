@@ -4,9 +4,9 @@ import com.lmyxlf.entity.middle.MapOfChina;
 import com.lmyxlf.mapper.middle.MapOfChinaMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import javax.annotation.Resource;
 import java.util.List;
+
 
 @SpringBootTest
 public class MapOfChinaTest {
@@ -14,7 +14,7 @@ public class MapOfChinaTest {
     private MapOfChinaMapper mapOfChinaMapper;
 
     /**
-     * ²âÊÔ mybatis
+     * æµ‹è¯• mybatis
      */
     @Test
     public void testMapOfChinaMapper(){

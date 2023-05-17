@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmyxlf.mapper.leftAndRight.TemperatureBandMapper">
+    <!--
+        获取各个温度带的出售农产品数量
+    -->
+    <select id="getTheNumberOfProductsInEachTemperatureZone" parameterType="list" resultType="allLevelCounts">
+        select level_no,level_name,count(*) counts from (select ship_from_address,first_level.level_no
+            level_no,first_level.level_name level_name from product left join third_level on
+            product.third_level=third_level.level_no left join second_level on
+            third_level.second_level_no=second_level.level_no left join first_level on
+            second_level.first_level_no=first_level.level_no) new_table1
+            <where>
+                <if test="provinceIds != null and provinceIds.length > 0">
+                    ship_from_address in (select province_id from province where
+                        <foreach collection="provinceIds" item="item" open="" separator=" or " close="">
+                            province_name like concat('%',#{item},'%')
+                        </foreach>
+                    )
+                </if>
+            </where>
+            group by level_no order by level_no
+    </select>
+</mapper>

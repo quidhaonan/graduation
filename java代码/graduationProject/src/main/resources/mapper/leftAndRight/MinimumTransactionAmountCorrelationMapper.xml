@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmyxlf.mapper.leftAndRight.MinimumTransactionAmountCorrelationMapper">
+    <!--
+        获取每个最低交易额等级的详细信息（包含收藏人数、询价人数、成交人数、评价人数、处于该等级下的农产品总数）
+    -->
+    <select id="getMinimumTransactionAmountCorrelation" resultType="minimumTransactionAmountCorrelation">
+        select (@row_number:=@row_number + 1) as id,minimum_transaction_amount_correlation,
+            round(collectors_counts/counts,2) collectors_counts,round(inquiry/counts,2) inquiry,
+            round(traded/counts,2) traded,round(assess/counts,2) assess,counts from (select
+            start_batching*price minimum_transaction_amount_correlation,sum(collectors_counts)
+            collectors_counts,sum(inquiry) inquiry,sum(traded) traded,sum(assess) assess,count(*)
+            counts  from (select start_batching,price,collectors_counts,inquiry,traded,assess
+            from product where start_batching*price &lt; 50000) new_table1 group by
+            minimum_transaction_amount_correlation order by minimum_transaction_amount_correlation)
+            new_table2,(select @row_number:=0) as t
+    </select>
+</mapper>

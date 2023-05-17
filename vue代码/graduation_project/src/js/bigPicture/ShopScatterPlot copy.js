@@ -2,6 +2,7 @@ import * as echarts from 'echarts'
 import 'echarts-gl'
 import { $post } from '../../utils/request'
 
+
 // 将配置定义在外面，便于将两个函数分开
 let config
 
@@ -232,11 +233,6 @@ export async function initSelect(selectXDom,selectYDom,selectZDom,selectCDom,sel
         const selectedOption = selectXDom.options[selectedIndex];
         const selectedValue = selectedOption.value
 
-        if(selectedValue=='店铺地区'){
-            console.log(config.onChange.)
-        }
-        console.log(selectedValue)
-
         config.xAxis3D=selectedValue
         config.onChange()
     })
@@ -274,7 +270,6 @@ export async function initSelect(selectXDom,selectYDom,selectZDom,selectCDom,sel
         const selectedValue = selectedOption.value;
 
         config.symbolSize=selectedValue
-        console.log('执行了')
         config.onChange()
     })
 }

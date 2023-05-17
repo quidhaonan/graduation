@@ -3,8 +3,8 @@ package com.lmyxlf.mapper.leftAndRight;
 import com.lmyxlf.entity.leftAndRight.AllLevelTurnover;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+
 
 /**
  * 每种农产品分类下的农产品营业额分析的映射类
@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Mapper
 public interface AllLevelTurnoverMapper {
-
     /**
      * 获取第一级分类的信息
      *

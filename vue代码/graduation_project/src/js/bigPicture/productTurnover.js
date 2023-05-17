@@ -1,9 +1,11 @@
-import { $post } from '@/utils/request';
+import { $get } from '@/utils/request';
 import * as echarts from 'echarts'
 
+
+// 将数据定义在外面，便于 formatter 获取到
+let productTurnover
 export async function initProductTurnover(productTurnoverDom) {
     const myChart = echarts.init(productTurnoverDom);
-
     
     const option = {
         title: {
@@ -24,6 +26,37 @@ export async function initProductTurnover(productTurnoverDom) {
             trigger: 'axis',
             axisPointer: {
                 type: 'shadow'
+            },
+            formatter:function(params){
+                let result=`
+                            <table>
+                                <tr>
+                                    <td><h3>名称</h3></td>
+                                    <td>：${productTurnover[params[0].dataIndex].proName}</td>
+                                </tr>
+                                <tr>
+                                    <td><h3>营业额</h3></td>
+                                    <td>：${productTurnover[params[0].dataIndex].turnover}元</td>
+                                </tr>
+                                <tr>
+                                    <td><h3>价格</h3></td>
+                                    <td>：${productTurnover[params[0].dataIndex].price}元</td>
+                                </tr>
+                                <tr>
+                                    <td><h3>起批量</h3></td>
+                                    <td>：${productTurnover[params[0].dataIndex].startBatching}</td>
+                                </tr>
+                                <tr>
+                                    <td><h3>成交人数</h3></td>
+                                    <td>：${productTurnover[params[0].dataIndex].traded}</td>
+                                </tr>
+                                <tr>
+                                    <td><h3>收藏人数</h3></td>
+                                    <td>：${productTurnover[params[0].dataIndex].collectorsCounts}</td>
+                                </tr>
+                            </table>
+                            `
+                return result
             }
         },
         grid: {
@@ -71,8 +104,7 @@ export async function initProductTurnover(productTurnoverDom) {
 
 async function initData(option){
     // 获取数据
-    let productTurnover=await $post('/getProductTurnover')
-
+    productTurnover=await $get('/bigPicture/productTurnover')
     // 给配置赋值
     option.xAxis.data=[]
     option.series[0].data=[]

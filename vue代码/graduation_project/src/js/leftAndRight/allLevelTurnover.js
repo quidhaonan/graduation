@@ -1,5 +1,6 @@
 import * as echarts from "echarts"
-import { $post } from "../../utils/request"
+import { $get } from "../../utils/request"
+
 
 // 如果 initFirstLevel 调用 initRoseDiagram 的话，就获取不到显示玫瑰图的容器
 // 因此打算在 initFirstLevel 的方法中给该属性赋值键盘事件，以便 initRoseDiagram 使用
@@ -7,7 +8,7 @@ let $event
 
 // 加载第一第二级分类的数据
 export async function initAllLevelTurnover(secondLevelCounts, autoClick) {
-    let firstLevelTurnover = await $post('/getFirstTurnover')
+    let firstLevelTurnover = await $get('/leftAndRight/firstLevelTurnover')
     // const totalTurnover = firstLevelTurnover.reduce((sum, item) => sum + item.turnover, 0);
     // 存放第二级的占比
     let percents=[]
@@ -121,8 +122,24 @@ export async function initAllLevelTurnover(secondLevelCounts, autoClick) {
                     // params[0].dataIndex，获取当前数据在 data 数组中的索引
                     percent=percents[params[0].dataIndex]+'%'
                 }
+                let result=`
+                            <table>
+                                <tr>
+                                    <td>${params[0].seriesName}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>${params[0].name}</td>
+                                    <td>：${value}元</td>
+                                </tr>
+                                <tr>
+                                    <td>占比</td>
+                                    <td>：${percent}</td>
+                                </tr>
+                            </table>
+                            `
 
-                return '<table><tr><td>' + params[0].seriesName + '</td><td></td></tr><tr><td>' + params[0].name + '</td><td> : ' + value + '元' + '</td></tr><tr><td>' + '占比</td><td> : ' + percent + '</td></tr></table>'
+                return result
             }
 
         },
@@ -139,7 +156,7 @@ export async function initAllLevelTurnover(secondLevelCounts, autoClick) {
             // 判断是否有 groupId 这个值，来决定是否请求 ajax（最后一级的时候没有该属性）
             if (event.data.groupId) {
                 // 第二层的数据向后台请求
-                let secondLevelTurnover = await $post('/getSecondTurnover', { 'levelNo': event.data.groupId })
+                let secondLevelTurnover = await $get('/leftAndRight/secondLevelTurnover/'+event.data.groupId)
                 // 存放第二级的占比情况
                 percents=[]
                 
@@ -215,14 +232,11 @@ export async function initAllLevelTurnover(secondLevelCounts, autoClick) {
 
 // 加载玫瑰图
 export async function initRoseDiagramTurnover() {
-    // console.log($event.name)
-    let thirdLevelTurnover = await $post('/getThirdTurnover', { 'levelName': $event.name })
-    // console.log(thirdLevelCounts)
-    // console.log($event)
+    let thirdLevelTurnover = await $get('/leftAndRight/thirdLevelTurnover/'+$event.name)
 
     const option = {
         title: {
-            text: '农产品交易额',
+            // text: '农产品交易额',
             // subtext: 'Fake Data',
             left: 'center'
         },

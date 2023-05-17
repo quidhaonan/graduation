@@ -1,112 +1,112 @@
 <template>
   <div class="panel">
-    <h2>商铺分析</h2>
+    <h2>商铺多维度分析</h2>
     <div class="chart">
       <div id="container">
-      <div id="shopScatterPlot"></div>
-      <div class="dg main" id="dropDownBox">
-        <ul v-show="isShow">
-          <li class="cr string">
-            <div>
-              <span class="property-name">xAxis3D</span>
-              <div class="c">
-                <select id="selectX">
-                  <option value="店铺地区">店铺地区</option>
-                  <option value="是否是VIP">是否是VIP</option>
-                  <option value="店铺热度">店铺热度</option>
-                  <option value="店铺等级">店铺等级</option>
-                  <option value="店铺总营业额" selected>店铺总营业额</option>
-                  <option value="店铺粉丝数">店铺粉丝数</option>
-                  <option value="平均发货速度">平均发货速度</option>
-                  <option value="售后率">售后率</option>
-                  <option value="复购率">复购率</option>
-                  <option value="店铺评分">店铺评分</option>
-                </select>
+        <div ref="shopScatterPlot" id="shopScatterPlot"></div>
+        <div class="dg main" id="dropDownBox">
+          <ul v-show="isShow">
+            <li class="cr string">
+              <div>
+                <span class="property-name">xAxis3D</span>
+                <div class="c">
+                  <select ref="selectX" id="selectX">
+                    <option value="商铺地区">商铺地区</option>
+                    <option value="是否是VIP">是否是VIP</option>
+                    <option value="商铺热度">商铺热度</option>
+                    <option value="商铺总营业额" selected>商铺总营业额</option>
+                    <option value="商铺粉丝数">商铺粉丝数</option>
+                    <option value="平均发货速度">平均发货速度</option>
+                    <option value="售后率">售后率</option>
+                    <option value="复购率">复购率</option>
+                    <option value="商铺评分">商铺评分</option>
+                  </select>
+                </div>
               </div>
-            </div>
-          </li>
-          <li class="cr string">
-            <div>
-              <span class="property-name">yAxis3D</span>
-              <div class="c">
-                <select id="selectY">
-                  <option value="店铺地区" selected>店铺地区</option>
-                  <option value="是否是VIP">是否是VIP</option>
-                  <option value="店铺热度">店铺热度</option>
-                  <option value="店铺等级">店铺等级</option>
-                  <option value="店铺总营业额">店铺总营业额</option>
-                  <option value="店铺粉丝数">店铺粉丝数</option>
-                  <option value="平均发货速度">平均发货速度</option>
-                  <option value="售后率">售后率</option>
-                  <option value="复购率">复购率</option>
-                  <option value="店铺评分">店铺评分</option>
-                </select>
+            </li>
+            <li class="cr string">
+              <div>
+                <span class="property-name">yAxis3D</span>
+                <div class="c">
+                  <select ref="selectY" id="selectY">
+                    <option value="商铺地区" selected>商铺地区</option>
+                    <option value="是否是VIP">是否是VIP</option>
+                    <option value="商铺热度">商铺热度</option>
+                    <option value="商铺总营业额">商铺总营业额</option>
+                    <option value="商铺粉丝数">商铺粉丝数</option>
+                    <option value="平均发货速度">平均发货速度</option>
+                    <option value="售后率">售后率</option>
+                    <option value="复购率">复购率</option>
+                    <option value="商铺评分">商铺评分</option>
+                  </select>
+                </div>
               </div>
-            </div>
-          </li>
-          <li class="cr string">
-            <div>
-              <span class="property-name">zAxis3D</span>
-              <div class="c">
-                <select id="selectZ">
-                  <option value="店铺地区">店铺地区</option>
-                  <option value="是否是VIP" selected>是否是VIP</option>
-                  <option value="店铺热度">店铺热度</option>
-                  <option value="店铺等级">店铺等级</option>
-                  <option value="店铺总营业额">店铺总营业额</option>
-                  <option value="店铺粉丝数">店铺粉丝数</option>
-                  <option value="平均发货速度">平均发货速度</option>
-                  <option value="售后率">售后率</option>
-                  <option value="复购率">复购率</option>
-                  <option value="店铺评分">店铺评分</option>
-                </select>
+            </li>
+            <li class="cr string">
+              <div>
+                <span class="property-name">zAxis3D</span>
+                <div class="c">
+                  <select ref="selectZ" id="selectZ">
+                    <option value="商铺地区">商铺地区</option>
+                    <option value="是否是VIP" selected>是否是VIP</option>
+                    <option value="商铺热度">商铺热度</option>
+                    <option value="商铺总营业额">商铺总营业额</option>
+                    <option value="商铺粉丝数">商铺粉丝数</option>
+                    <option value="平均发货速度">平均发货速度</option>
+                    <option value="售后率">售后率</option>
+                    <option value="复购率">复购率</option>
+                    <option value="商铺评分">商铺评分</option>
+                  </select>
+                </div>
               </div>
-            </div>
-          </li>
-          <li class="cr string">
-            <div>
-              <span class="property-name">color</span>
-              <div class="c">
-                <select id="selectC">
-                  <option value="店铺地区" selected>店铺地区</option>
-                  <option value="是否是VIP">是否是VIP</option>
-                  <option value="店铺热度">店铺热度</option>
-                  <option value="店铺等级">店铺等级</option>
-                  <option value="店铺总营业额">店铺总营业额</option>
-                  <option value="店铺粉丝数">店铺粉丝数</option>
-                  <option value="平均发货速度">平均发货速度</option>
-                  <option value="售后率">售后率</option>
-                  <option value="复购率">复购率</option>
-                  <option value="店铺评分">店铺评分</option>
-                </select>
+            </li>
+            <li class="cr string">
+              <div>
+                <span class="property-name">color</span>
+                <div class="c">
+                  <select ref="selectC" id="selectC">
+                    <option value="商铺地区" selected>商铺地区</option>
+                    <option value="是否是VIP">是否是VIP</option>
+                    <option value="商铺热度">商铺热度</option>
+                    <option value="商铺总营业额">商铺总营业额</option>
+                    <option value="商铺粉丝数">商铺粉丝数</option>
+                    <option value="平均发货速度">平均发货速度</option>
+                    <option value="售后率">售后率</option>
+                    <option value="复购率">复购率</option>
+                    <option value="商铺评分">商铺评分</option>
+                  </select>
+                </div>
               </div>
-            </div>
-          </li>
-          <li class="cr string">
-            <div>
-              <span class="property-name">symbolSize</span>
-              <div class="c">
-                <select id="selectS">
-                  <option value="店铺地区">店铺地区</option>
-                  <option value="是否是VIP">是否是VIP</option>
-                  <option value="店铺热度">店铺热度</option>
-                  <option value="店铺等级">店铺等级</option>
-                  <option value="店铺总营业额">店铺总营业额</option>
-                  <option value="店铺粉丝数">店铺粉丝数</option>
-                  <option value="平均发货速度">平均发货速度</option>
-                  <option value="售后率">售后率</option>
-                  <option value="复购率">复购率</option>
-                  <option value="店铺评分" selected>店铺评分</option>
-                </select>
+            </li>
+            <li class="cr string">
+              <div>
+                <span class="property-name">symbolSize</span>
+                <div class="c">
+                  <select ref="selectS" id="selectS">
+                    <option value="商铺地区">商铺地区</option>
+                    <option value="是否是VIP">是否是VIP</option>
+                    <option value="商铺热度">商铺热度</option>
+                    <option value="商铺总营业额">商铺总营业额</option>
+                    <option value="商铺粉丝数">商铺粉丝数</option>
+                    <option value="平均发货速度">平均发货速度</option>
+                    <option value="售后率">售后率</option>
+                    <option value="复购率">复购率</option>
+                    <option value="商铺评分" selected>商铺评分</option>
+                  </select>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
-        <div class="close-button close-bottom" @click="tes" id="close">
-          Close Controls
+            </li>
+          </ul>
+          <div
+            class="close-button close-bottom"
+            @click="tes"
+            ref="close"
+            id="close"
+          >
+            Close Controls
+          </div>
         </div>
       </div>
-    </div>
     </div>
     <div class="panel-footer"></div>
   </div>
@@ -119,26 +119,33 @@ import {
   initSelect,
 } from "../../js/bigPicture/ShopScatterPlot";
 
-onMounted(() => {
-  const shopScatterPlotDom = document.getElementById("shopScatterPlot");
-  const selectXDom = document.getElementById("selectX");
-  const selectYDom = document.getElementById("selectY");
-  const selectZDom = document.getElementById("selectZ");
-  const selectCDom = document.getElementById("selectC");
-  const selectSDom = document.getElementById("selectS");
+const shopScatterPlot = ref(null);
+const selectX = ref(null);
+const selectY = ref(null);
+const selectZ = ref(null);
+const selectC = ref(null);
+const selectS = ref(null);
 
-  initShopScatterPlot(shopScatterPlotDom);
-  initSelect(selectXDom, selectYDom, selectZDom, selectCDom, selectSDom);
+onMounted(() => {
+  initShopScatterPlot(shopScatterPlot.value);
+  initSelect(
+    selectX.value,
+    selectY.value,
+    selectZ.value,
+    selectC.value,
+    selectS.value
+  );
 });
 
 // 给下拉框添加控制消失与显示的事件
-let isShow = ref(true);
+const isShow = ref(true);
+const close = ref(null);
 function tes() {
   if (isShow.value) {
-    document.getElementById("close").innerHTML = "Open Controls";
+    close.value.innerHTML = "Open Controls";
     isShow.value = false;
   } else {
-    document.getElementById("close").innerHTML = "Close Controls";
+    close.value.innerHTML = "Close Controls";
     isShow.value = true;
   }
 }

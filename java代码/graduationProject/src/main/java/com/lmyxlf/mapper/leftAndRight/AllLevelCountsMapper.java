@@ -3,8 +3,8 @@ package com.lmyxlf.mapper.leftAndRight;
 import com.lmyxlf.entity.leftAndRight.AllLevelCounts;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+
 
 /**
  * 每种农产品分类下的农产品数量分析的映射类

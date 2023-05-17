@@ -1,8 +1,8 @@
 package com.lmyxlf.service.middle;
 
 import com.lmyxlf.entity.middle.TotalCounts;
-
 import java.util.List;
+
 
 /**
  * 获取农产品与商铺的总数量的服务类接口
@@ -10,7 +10,6 @@ import java.util.List;
  * @author lmy
  */
 public interface TotalCountsService {
-
     /**
      * 获取农产品与商铺的总数量
      *

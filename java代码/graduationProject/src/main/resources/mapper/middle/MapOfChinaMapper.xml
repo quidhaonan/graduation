@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lmyxlf.mapper.middle.MapOfChinaMapper">
-
     <!--
         获得每个省市农产品的数量，制作中国地图
     -->

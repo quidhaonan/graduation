@@ -1,0 +1,41 @@
+[33mcommit ba4fdc50231e55b201fd1b82561671ec73a584e7[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: lmy <2804189910@qq.com>
+Date:   Tue May 16 18:38:34 2023 +0800
+
+    2023年05月15日答辩完成（定稿）
+
+[33mcommit da2a7c06aa60cc5117060eec9d2d7de4a7a41012[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: lmy <2804189910@qq.com>
+Date:   Fri Apr 14 13:08:02 2023 +0800
+
+    清洗第三次爬取前 20 页的数据
+
+[33mcommit ce6d0d8f31a6a7a85a045da26a96e2396a68b7bf[m
+Author: lmy <2804189910@qq.com>
+Date:   Fri Apr 14 11:42:53 2023 +0800
+
+    实现部分 java 代码
+
+[33mcommit 5c4a847d6d8e211abbbf33541b846f923fe2a207[m
+Author: lmy <2804189910@qq.com>
+Date:   Wed Apr 12 17:31:22 2023 +0800
+
+    导师已决定该大纲，从不能使用其他人模板 battle 到可以在此基础上优化，并通过压缩 sql 文件解决上传体积超过 100M 而过大的问题
+
+[33mcommit c3289daa803f83a99b12779be8f8a4e1e6df8a61[m
+Author: lmy <2804189910@qq.com>
+Date:   Thu Mar 23 10:07:50 2023 +0800
+
+    完成 python 代码（没精简），新增部分 vue 代码，新增爬取前 20 页的商品表
+
+[33mcommit fc5dd9969ce1c6db717d2dcd5f268d952042cf61[m
+Author: lmy <2804189910@qq.com>
+Date:   Fri Mar 17 11:12:37 2023 +0800
+
+    仅包含 python 代码，爬取商品信息
+
+[33mcommit 2d0b68ca23c2e6a779666653ff64ef6c9374546f[m
+Author: quidhaonan <108039929+quidhaonan@users.noreply.github.com>
+Date:   Thu Mar 16 16:47:06 2023 +0800
+
+    Initial commit

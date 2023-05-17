@@ -1,8 +1,8 @@
 package com.lmyxlf.service.leftAndRight;
 
 import com.lmyxlf.entity.leftAndRight.AllLevelCounts;
-
 import java.util.List;
+
 
 /**
  * 每种农产品分类下的农产品数量分析的服务类接口
@@ -10,7 +10,6 @@ import java.util.List;
  * @author lmy
  */
 public interface AllLevelCountsService {
-
     /**
      * 获取第一级分类的信息
      *

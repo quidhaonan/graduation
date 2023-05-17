@@ -3,11 +3,11 @@ package com.lmyxlf.config;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Component;
-
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 
 /**
  * PercentageDoubleTypeHandler：百分比双精度类型处理程序
@@ -17,7 +17,6 @@ import java.sql.SQLException;
  */
 @Component
 public class PercentageDoubleTypeHandler extends BaseTypeHandler<Double> {
-
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Double parameter, JdbcType jdbcType) throws SQLException {
         ps.setDouble(i, parameter);

@@ -5,9 +5,9 @@ import com.lmyxlf.mapper.bigPicture.ShopScatterPlotMapper;
 import com.lmyxlf.service.bigPicture.ShopScatterPlotService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import javax.annotation.Resource;
 import java.util.List;
+
 
 @SpringBootTest
 public class ShopScatterPlotTest {
@@ -17,7 +17,7 @@ public class ShopScatterPlotTest {
     private ShopScatterPlotService shopScatterPlotService;
 
     /**
-     * ²âÊÔ mybatis
+     * æµ‹è¯• mybatis
      */
     @Test
     public void testShopScatterPlotMapper(){
@@ -28,11 +28,11 @@ public class ShopScatterPlotTest {
     }
 
     /**
-     * ²âÊÔ redis »º´æ
+     * æµ‹è¯• redis ç¼“å­˜
      */
     @Test
     public void testShopScatterPlotServiceImpl(){
-        List<ShopScatterPlot> shopScatterPlot = shopScatterPlotService.getShopScatterPlot();
-        System.out.println(shopScatterPlot.get(0));
+//        List<Object[]> shopScatterPlot = shopScatterPlotService.getShopScatterPlot();
+//        System.out.println(Arrays.toString(shopScatterPlot.get(0)));
     }
 }

@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import Index from '../views/Index.vue'
-import App from '../App.vue'
+
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    // component: HomeView
     component:Index
   },
   {
@@ -26,7 +24,20 @@ const routes = [
   {
     path:'/shop',
     name:'shop',
-    // component:() => import('../views/table/ShopTable.vue')
+    component:() => import('../views/table/ShopTable.vue')
+  },
+  // 出现错误跳转
+  {
+    path: '/error',
+    name: 'Error',
+    component: ()=>import('../views/Error404.vue')
+  },
+  // 错误页面（访问错误路径跳转）
+  {
+    path:'/:pathMatch(.*)*',
+    name:'ErrorPage',
+    meta:{ title:'404' },
+    component:()=>import('../views/Error404.vue')
   }
 ]
 

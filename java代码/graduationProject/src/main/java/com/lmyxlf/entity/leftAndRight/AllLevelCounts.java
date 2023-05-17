@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+
 /**
  * 每种农产品分类下的农产品数量分析
  *

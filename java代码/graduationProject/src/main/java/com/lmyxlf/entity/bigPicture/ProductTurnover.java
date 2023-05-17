@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.io.Serializable;
 import java.util.Date;
+
 
 /**
  * 农产品总营业额（存储农产品表所有信息）
@@ -17,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @ToString
-public class ProductTurnover implements Serializable {
+public class ProductTurnover {
     /**
      * ID
      */

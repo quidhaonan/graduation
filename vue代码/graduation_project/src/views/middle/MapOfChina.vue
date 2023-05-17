@@ -3,20 +3,20 @@
     <div class="map1"></div>
     <div class="map2"></div>
     <div class="map3"></div>
-    <div id="chart"></div>
+    <div ref="chart" id="chart"></div>
   </div>
 </template>
 
 <script setup>
-import '../../js/flexible'
-import { onMounted } from "vue";
-import {initMap} from '../../js/middle/mapOfChina.js'
+import "../../js/flexible";
+import { onMounted, ref } from "vue";
+import { initMap } from "../../js/middle/mapOfChina.js";
+
+const chart = ref(null);
 
 onMounted(() => {
-  const map=document.getElementById('chart')
-  initMap(map)
+  initMap(chart.value);
 });
-
 </script>
 
 <style lang="less" scoped>
@@ -44,7 +44,7 @@ onMounted(() => {
     width: 6.475rem;
     // 518px
     height: 6.475rem;
-    background: url(../../assets/map.png) no-repeat;
+    background: url(../../assets/img/map.png) no-repeat;
     background-size: 100% 100%;
     opacity: 0.3;
   }
@@ -53,7 +53,7 @@ onMounted(() => {
     width: 8.0375rem;
     // 643px
     height: 8.0375rem;
-    background-image: url(../../assets/lbx.png);
+    background-image: url(../../assets/img/lbx.png);
     opacity: 0.6;
     animation: rotate 15s linear infinite;
     z-index: 2;
@@ -63,7 +63,7 @@ onMounted(() => {
     width: 7.075rem;
     // 566px
     height: 7.075rem;
-    background-image: url(../../assets/jt.png);
+    background-image: url(../../assets/img/jt.png);
     animation: rotate1 10s linear infinite;
   }
   @keyframes rotate {
@@ -82,7 +82,5 @@ onMounted(() => {
       transform: translate(-50%, -50%) rotate(-360deg);
     }
   }
-
 }
-
 </style>

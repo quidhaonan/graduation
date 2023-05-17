@@ -4,9 +4,9 @@ import com.lmyxlf.entity.middle.TotalCounts;
 import com.lmyxlf.mapper.middle.TotalCountsMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import javax.annotation.Resource;
 import java.util.List;
+
 
 @SpringBootTest
 public class TotalCountsTest {
@@ -14,7 +14,7 @@ public class TotalCountsTest {
     private TotalCountsMapper totalCountsMapper;
 
     /**
-     * ²âÊÔ mybatis
+     * æµ‹è¯• mybatis
      */
     @Test
     public void testTotalCountsMapper(){

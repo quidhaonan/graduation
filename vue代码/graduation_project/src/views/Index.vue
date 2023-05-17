@@ -5,16 +5,17 @@
   </header>
   <section id="mainbox">
     <div class="column">
-      <FirstLevelCounts />
+      <AllLevelCounts />
       <AllLevelTurnover />
     </div>
     <div class="column">
       <TotalCounts />
-      <MapOfChina/>
+      <MapOfChina />
     </div>
     <div class="column">
-      <StartBatchingRelationship />
-      <PurchasingHeat />
+      <MinimumTransactionAmountCorrelation />
+      <!-- <PurchasingHeat /> -->
+      <TemperatureBand />
     </div>
   </section>
   <footer>
@@ -26,29 +27,25 @@
       <ShopScatterPlot />
     </div>
   </footer>
-
 </template>
 
 <script setup>
 import "../js/flexible";
 import TopTitle from "../views/header/TopTitle.vue";
 import ShowTime from "../views/header/ShowTime.vue";
-import TotalCounts from "./middle/TotalCounts.vue";
-// import HelloWorld from "../components/HelloWorld.vue";
-import MapOfChina from "../views/middle/MapOfChina.vue";
-import FirstLevelCounts from "../views/leftAndRight/AllLevelCounts.vue";
-import PurchasingHeat from "../views/leftAndRight/PurchasingHeat.vue";
-import StartBatchingRelationship from "../views/leftAndRight/StartBatchingRelationship.vue";
 
-import InquiryTradedAssess from "../views/leftAndRight/InquiryTradedAssess.vue";
+import AllLevelCounts from "../views/leftAndRight/AllLevelCounts.vue";
+import AllLevelTurnover from "../views/leftAndRight/AllLevelTurnover";
+
+import TotalCounts from "./middle/TotalCounts.vue";
+import MapOfChina from "../views/middle/MapOfChina.vue";
+
+import MinimumTransactionAmountCorrelation from "./leftAndRight/MinimumTransactionAmountCorrelation.vue";
+// import PurchasingHeat from "../views/leftAndRight/PurchasingHeat.vue";
+import TemperatureBand from "../views/leftAndRight/TemperatureBand";
 
 import ProductTurnover from "../views/bigPicture/ProductTurnover.vue";
 import ShopScatterPlot from "../views/bigPicture/ShopScatterPlot.vue";
-import Test from "../views/Test.vue";
-
-import ProductTable from "../views/table/ProductTable";
-// import ShopTable from '../views/table/ShopTable'
-import AllLevelTurnover from "../views/leftAndRight/AllLevelTurnover";
 </script>
 
 <style lang="less">
@@ -64,7 +61,7 @@ header {
   position: relative;
   // 100px
   height: 1.25rem;
-  background: url("../assets/head_bg.png") no-repeat;
+  background: url("../assets/img/head_bg.png") no-repeat;
   background-size: 100% 100%;
 }
 #mainbox {
@@ -96,7 +93,7 @@ header {
     border: 1px solid rgba(25, 186, 139, 0.17);
     // 15px
     margin-bottom: 0.1875rem;
-    background: url("../assets/line(1).png") rgba(255, 255, 255, 0.03);
+    background: url("../assets/img/line.png") rgba(255, 255, 255, 0.03);
     &::before {
       position: absolute;
       top: 0;
@@ -146,7 +143,6 @@ header {
     h2 {
       // 48px
       height: 0.6rem;
-      color: #fff;
       // 48px
       line-height: 0.6rem;
       text-align: center;
@@ -193,7 +189,7 @@ footer {
     border: 1px solid rgba(25, 186, 139, 0.17);
     // 15px
     margin-bottom: 0.1875rem;
-    background: url("../assets/line(1).png") rgba(255, 255, 255, 0.03);
+    background: url("../assets/img/line.png") rgba(255, 255, 255, 0.03);
     &::before {
       position: absolute;
       top: 0;
@@ -243,7 +239,6 @@ footer {
     h2 {
       // 48px
       height: 0.6rem;
-      color: #fff;
       // 48px
       line-height: 0.6rem;
       text-align: center;

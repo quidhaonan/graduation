@@ -1,23 +1,18 @@
 package com.lmyxlf.controller.leftAndRight;
 
-
 import com.lmyxlf.entity.leftAndRight.AllLevelCounts;
 import com.lmyxlf.service.leftAndRight.AllLevelCountsService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
+
 
 /**
  * 每种农产品分类下的农产品数量分析的控制器
  *
  * @author lmy
  */
-@Controller
+@RestController
 @RequestMapping("/leftAndRight")
 public class AllLevelCountsController {
     @Resource
@@ -29,10 +24,8 @@ public class AllLevelCountsController {
      * @return 符合要求的 AllLevelCounts 对象集合
      */
     @GetMapping("/firstLevelCounts")
-    @ResponseBody
     public List<AllLevelCounts> getFirstLevelCounts(){
-        List<AllLevelCounts> firstLevelCounts = allLevelCountsService.getFirstLevelCounts();
-        return firstLevelCounts;
+        return allLevelCountsService.getFirstLevelCounts();
     }
 
     /**
@@ -42,10 +35,8 @@ public class AllLevelCountsController {
      * @return 符合要求的 AllLevelCounts 对象集合
      */
     @GetMapping("/secondLevelCounts/{levelNo}")
-    @ResponseBody
     public List<AllLevelCounts> getSecondLevelCounts(@PathVariable Integer levelNo){
-        List<AllLevelCounts> secondLevelCounts = allLevelCountsService.getSecondLevelCounts(levelNo);
-        return secondLevelCounts;
+        return allLevelCountsService.getSecondLevelCounts(levelNo);
     }
 
     /**
@@ -55,9 +46,7 @@ public class AllLevelCountsController {
      * @return 符合要求的 AllLevelCounts 对象集合
      */
     @GetMapping("/thirdLevelCounts/{levelName}")
-    @ResponseBody
     public List<AllLevelCounts> getThirdLevelCounts(@PathVariable String levelName){
-        List<AllLevelCounts> thirdLevelCounts = allLevelCountsService.getThirdLevelCounts(levelName);
-        return thirdLevelCounts;
+        return allLevelCountsService.getThirdLevelCounts(levelName);
     }
 }

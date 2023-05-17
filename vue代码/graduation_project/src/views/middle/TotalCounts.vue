@@ -3,13 +3,18 @@
     <div class="no-hd">
       <ul>
         <!-- <a href="product" target="_blank"><li id="productTotalCounts"></li></a> -->
-        <router-link to="product" target="_blank" replace><li id="productTotalCounts"></li></router-link>
-        <router-link to="shop" target="_blank" replace><li id="shopTotalCounts"></li></router-link>
+        <router-link to="product" target="_blank" replace>
+          <li ref="productTotalCounts" id="productTotalCounts"></li>
+        </router-link>
+        <router-link to="shop" target="_blank" replace
+          ><li ref="shopTotalCounts" id="shopTotalCounts"></li
+        ></router-link>
       </ul>
     </div>
     <div class="no-bd">
       <ul>
         <li>商品总数</li>
+        <!-- <li>农产品总数</li> -->
         <li>商家总数</li>
       </ul>
     </div>
@@ -17,13 +22,14 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { initTotalCounts } from "../../js/middle/totalCounts";
 
+const productTotalCounts = ref(null);
+const shopTotalCounts = ref(null);
+
 onMounted(() => {
-  const productTotalCounts = document.getElementById("productTotalCounts");
-  const shopTotalCounts = document.getElementById("shopTotalCounts");
-  initTotalCounts(productTotalCounts, shopTotalCounts);
+  initTotalCounts(productTotalCounts.value, shopTotalCounts.value);
 });
 </script>
 

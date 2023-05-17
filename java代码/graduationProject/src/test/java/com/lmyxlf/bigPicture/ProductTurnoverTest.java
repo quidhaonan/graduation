@@ -3,12 +3,11 @@ package com.lmyxlf.bigPicture;
 import com.lmyxlf.entity.bigPicture.ProductTurnover;
 import com.lmyxlf.mapper.bigPicture.ProductTurnoverMapper;
 import com.lmyxlf.service.bigPicture.ProductTurnoverService;
-import com.lmyxlf.service.bigPicture.impl.ProductTurnoverServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import javax.annotation.Resource;
 import java.util.List;
+
 
 @SpringBootTest
 public class ProductTurnoverTest {
@@ -18,7 +17,7 @@ public class ProductTurnoverTest {
     private ProductTurnoverService productTurnoverService;
 
     /**
-     * ²âÊÔ mybatis
+     * æµ‹è¯• mybatis
      */
     @Test
     public void testProductTurnoverMapper(){
@@ -28,7 +27,7 @@ public class ProductTurnoverTest {
     }
 
     /**
-     * ²âÊÔ redis »º´æ
+     * æµ‹è¯• redis ç¼“å­˜
      */
     @Test
     public void testProductTurnoverServiceImpl(){

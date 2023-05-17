@@ -11,3 +11,14 @@ mybatis:
   configuration:
     # 将数据库中以下划线分隔的字段名映射到实体类中以驼峰命名方式表示的属性名
     map-underscore-to-camel-case: true
+
+# 分页插件配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+# 打印 SQL 语句
+logging.level:
+  com.lmyxlf.mapper: DEBUG

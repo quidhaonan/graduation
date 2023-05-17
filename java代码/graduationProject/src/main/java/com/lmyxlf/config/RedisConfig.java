@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
+
 /**
  * 解决 redis 乱码问题（不解决也能正常使用），为了抑制 could not autowire no beans of RedisconnectionFactory type found，
  *      特地加了个依赖
@@ -16,9 +17,9 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  */
 @Configuration
 public class RedisConfig {
-
     @Bean
-    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) throws UnknownException {
+    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory)
+            throws UnknownException {
         // 创建模板
         RedisTemplate<String,Object> redisTemplate=new RedisTemplate<>();
         // 设置连接工厂

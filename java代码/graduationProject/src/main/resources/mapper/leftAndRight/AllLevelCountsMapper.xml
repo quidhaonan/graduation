@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lmyxlf.mapper.leftAndRight.AllLevelCountsMapper">
-
     <!--
         获取第一级分类的信息
     -->
@@ -30,7 +29,8 @@
             new_table1.level_no=new_table2.third_level group by second_level_no) new_table3 left join
             second_level on new_table3.second_level_no=second_level.level_no order by level_no) new_table4,
             (select count(*) total_counts from product where third_level in (select level_no from third_level
-            where second_level_no in (select level_no from second_level where first_level_no=#{levelNo}))) new_table5
+            where second_level_no in (select level_no from second_level where first_level_no=#{levelNo})))
+            new_table5
     </select>
 
     <!--
@@ -41,5 +41,4 @@
             level_no from second_level where level_name=#{levelName})) new_table1 left join product on
             new_table1.level_no=product.third_level group by level_no order by level_no
     </select>
-
 </mapper>
