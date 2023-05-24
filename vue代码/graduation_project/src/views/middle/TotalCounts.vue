@@ -78,7 +78,8 @@ onMounted(() => {
           line-height: 1rem;
           // 70px
           font-size: 0.875rem;
-          color: #ffeb7b;
+          // color: #ffeb7b;
+          color: black;
           // 4px
           padding: 0.05rem 0;
           font-family: electronicFont;

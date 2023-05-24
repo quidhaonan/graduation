@@ -19,7 +19,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 #startBatching {
   height: 100%;
   width: 100%;

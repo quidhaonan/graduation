@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <!-- <header>
     <TopTitle />
     <ShowTime />
   </header>
@@ -12,10 +12,10 @@
       <TotalCounts />
       <MapOfChina />
     </div>
-    <div class="column">
-      <MinimumTransactionAmountCorrelation />
+    <div class="column"> -->
+      <!-- <MinimumTransactionAmountCorrelation /> -->
       <!-- <PurchasingHeat /> -->
-      <TemperatureBand />
+      <!-- <TemperatureBand />
     </div>
   </section>
   <footer>
@@ -26,7 +26,8 @@
     <div class="column">
       <ShopScatterPlot />
     </div>
-  </footer>
+  </footer> -->
+  <AllLevelTurnover/>
 </template>
 
 <script setup>
@@ -49,6 +50,11 @@ import ShopScatterPlot from "../views/bigPicture/ShopScatterPlot.vue";
 </script>
 
 <style lang="less">
+// 为了截图南丁格尔玫瑰图一出现就显示比例，将背景设置白色
+// body{
+//   background: rgb(255, 255, 255);
+// }
+
 // 声明字体
 @font-face {
   font-family: electronicFont;
@@ -157,6 +163,87 @@ header {
       // width: 100%;
     }
   }
+  // 单独把分析分离出来的 css 样式
+  // .panel {
+  //   margin-left: 50px;
+  //   margin-top: 50px;
+  //   padding: 0 !important;
+  //   position: relative;
+  //   // 310px
+  //   // height: 3.875rem;
+  //   // height: 5.8125rem;
+  //   height: 666px;
+  //   width: 666px;
+  //   // 15px 40px
+  //   padding: 0.1875rem 0.5rem;
+  //   // background-color: pink;
+  //   border: 1px solid rgba(25, 186, 139, 0.17);
+  //   // 15px
+  //   margin-bottom: 0.1875rem;
+  //   background: url("../assets/img/line.png") rgba(255, 255, 255, 0.03);
+  //   &::before {
+  //     position: absolute;
+  //     top: 0;
+  //     left: 0;
+  //     width: 10px;
+  //     height: 10px;
+  //     border-left: 2px solid #02a6b5;
+  //     border-top: 2px solid #02a6b5;
+  //     content: "";
+  //   }
+  //   &::after {
+  //     position: absolute;
+  //     top: 0;
+  //     right: 0;
+  //     width: 10px;
+  //     height: 10px;
+  //     border-right: 2px solid #02a6b5;
+  //     border-top: 2px solid #02a6b5;
+  //     content: "";
+  //   }
+  //   .panel-footer {
+  //     position: absolute;
+  //     bottom: 0;
+  //     left: 0;
+  //     width: 100%;
+  //     &::before {
+  //       position: absolute;
+  //       left: 0;
+  //       bottom: 0;
+  //       width: 10px;
+  //       height: 10px;
+  //       border-left: 2px solid #02a6b5;
+  //       border-bottom: 2px solid #02a6b5;
+  //       content: "";
+  //     }
+  //     &::after {
+  //       position: absolute;
+  //       bottom: 0;
+  //       right: 0;
+  //       width: 10px;
+  //       height: 10px;
+  //       border-right: 2px solid #02a6b5;
+  //       border-bottom: 2px solid #02a6b5;
+  //       content: "";
+  //     }
+  //   }
+  //   h2 {
+  //     // 48px
+  //     height: 0.6rem;
+  //     // 48px
+  //     line-height: 0.6rem;
+  //     text-align: center;
+  //     // 20px
+  //     font-size: 0.25rem;
+  //     font-weight: 400;
+  //   }
+  //   .chart {
+  //     // 240px（太小了）
+  //     // height: 3rem;
+  //     height: 100%;
+  //     // width: 100%;
+  //   }
+  // }
 }
 footer {
   display: flex;

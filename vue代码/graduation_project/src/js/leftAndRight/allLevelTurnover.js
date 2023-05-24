@@ -35,11 +35,26 @@ export async function initAllLevelTurnover(secondLevelCounts, autoClick) {
         },
         yAxis: {
             // y 轴名称
-            name: '农产品销售额'
+            // name: '农产品销售额',
+            name: '农产品总营业额',
+            nameTextStyle:{
+                padding: [0, 0, 5, -50] 
+            },
+
+            // // 使 Y 轴出现单位（https://zhuanlan.zhihu.com/p/382691895）
+            // type: "value",
+            // // 看这里，看这里，看这里，看这里，看这里，看这里，看这里，看这里，看这里，看这里，
+            // // 看这里，看这里，看这里，看这里
+            // axisLabel: {
+            //     //这种做法就是在y轴的数据的值旁边拼接单位，貌似也挺方便的
+            //     formatter: "{value} 元",
+            // },
         },
         grid: {
             // 解决数字被遮挡问题
             left: 80,
+            // 使 Y 轴出现单位所连带改的设置
+            // left: 95,
             top: 60,
             bottom: 40
         },
@@ -207,8 +222,8 @@ export async function initAllLevelTurnover(secondLevelCounts, autoClick) {
                 graphic: [
                     {
                         type: "text",
-                        left: 80,
-                        top: 15,
+                        left: 120,
+                        top: 26,
                         style: {
                             text: "Back",
                             fontSize: 14,
@@ -274,7 +289,14 @@ export async function initRoseDiagramTurnover() {
                 },
                 data: []
             }
-        ]
+        ],
+
+        // 使图一出现就显示比例
+        // 设置标签显示，直接显示比例信息
+        // label: {
+        //     show: true,
+        //     formatter: '{b} : ({d}%)', // 显示百分比
+        // },
     };
     // 开始替换玫瑰图的数据
     option.legend.data = []

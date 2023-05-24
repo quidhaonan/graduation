@@ -1,6 +1,7 @@
 <template>
   <div class="panel bar">
-    <h2>农产品上架数量分布</h2>
+    <!-- <h2>农产品上架数量分布</h2> -->
+    <h2>农产品数量分析</h2>
     <div class="chart">
       <div ref="secondLevelCounts" id="secondLevelCounts">
         <!-- popper-class='popover' 是为了 js 中获得它（目前没用上） -->

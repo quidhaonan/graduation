@@ -19,7 +19,7 @@ onMounted(() => {
 });
 </script>
 
-<style>
+<style lang="less" scoped>
 #temperatureBand {
   height: 100%;
   width: 100%;

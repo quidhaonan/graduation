@@ -35,10 +35,21 @@ export async function initFirstLevel(secondLevelCounts, autoClick) {
         yAxis: {
             // y 轴名称
             name: '农产品数量',
+
+            // // 使 Y 轴出现单位（https://zhuanlan.zhihu.com/p/382691895）
+            // type: "value",
+            // // 看这里，看这里，看这里，看这里，看这里，看这里，看这里，看这里，看这里，看这里，
+            // // 看这里，看这里，看这里，看这里
+            // axisLabel: {
+            //     //这种做法就是在y轴的数据的值旁边拼接单位，貌似也挺方便的
+            //     formatter: "{value} 个",
+            // },
         },
         grid: {
             // 解决数字被遮挡问题
             left: 50,
+            // 使 Y 轴出现单位所连带改的设置
+            // left: 70,
             top: 35,
             bottom: 80
         },
@@ -121,7 +132,7 @@ export async function initFirstLevel(secondLevelCounts, autoClick) {
                     // params[0].dataIndex，获取当前数据在 data 数组中的索引
                     percent = percents[params[0].dataIndex] + '%'
                 }
-                let result=`
+                let result = `
                             <table>
                                 <tr>
                                     <td>${params[0].seriesName}</td>
@@ -154,7 +165,7 @@ export async function initFirstLevel(secondLevelCounts, autoClick) {
             // 判断是否有 groupId 这个值，来决定是否请求 ajax（最后一级的时候没有该属性）
             if (event.data.groupId) {
                 // 第二层的数据向后台请求
-                let secondLevelCounts = await $get('/leftAndRight/secondLevelCounts/'+event.data.groupId)
+                let secondLevelCounts = await $get('/leftAndRight/secondLevelCounts/' + event.data.groupId)
                 // 存放第二级的占比情况
                 percents = []
 
@@ -206,6 +217,8 @@ export async function initFirstLevel(secondLevelCounts, autoClick) {
                     {
                         type: "text",
                         left: 80,
+                        // 使 Y 轴出现单位所连带改的设置
+                        // left: 105,
                         top: 5,
                         style: {
                             text: "Back",
@@ -230,7 +243,7 @@ export async function initFirstLevel(secondLevelCounts, autoClick) {
 
 // 加载玫瑰图
 export async function initRoseDiagram() {
-    let thirdLevelCounts = await $get('/leftAndRight/thirdLevelCounts/'+$event.name)
+    let thirdLevelCounts = await $get('/leftAndRight/thirdLevelCounts/' + $event.name)
 
     const option = {
         title: {
@@ -246,7 +259,7 @@ export async function initRoseDiagram() {
             left: 'center',
             top: 'bottom',
             data: [],
-            show:false
+            show: false
         },
         toolbox: {
             show: true,
@@ -272,7 +285,14 @@ export async function initRoseDiagram() {
                 },
                 data: []
             }
-        ]
+        ],
+
+        // 使图一出现就显示比例
+        // 设置标签显示，直接显示比例信息
+        label: {
+            show: true,
+            formatter: '{b} : ({d}%)', // 显示百分比
+        },
     };
     // 开始替换玫瑰图的数据
     option.legend.data = []
