@@ -13,8 +13,8 @@
     </div>
     <div class="no-bd">
       <ul>
-        <li>商品总数</li>
-        <!-- <li>农产品总数</li> -->
+        <!-- <li>商品总数</li> -->
+        <li>农产品总数</li>
         <li>商家总数</li>
       </ul>
     </div>
@@ -78,8 +78,9 @@ onMounted(() => {
           line-height: 1rem;
           // 70px
           font-size: 0.875rem;
-          // color: #ffeb7b;
-          color: black;
+          color: #ffeb7b;
+          // 改变颜色，使图片打印后便于查看
+          // color: black;
           // 4px
           padding: 0.05rem 0;
           font-family: electronicFont;

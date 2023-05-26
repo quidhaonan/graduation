@@ -216,7 +216,7 @@ export async function initFirstLevel(secondLevelCounts, autoClick) {
                 graphic: [
                     {
                         type: "text",
-                        left: 80,
+                        left: 85,
                         // 使 Y 轴出现单位所连带改的设置
                         // left: 105,
                         top: 5,
@@ -289,10 +289,10 @@ export async function initRoseDiagram() {
 
         // 使图一出现就显示比例
         // 设置标签显示，直接显示比例信息
-        label: {
-            show: true,
-            formatter: '{b} : ({d}%)', // 显示百分比
-        },
+        // label: {
+        //     show: true,
+        //     formatter: '{b} : ({d}%)', // 显示百分比
+        // },
     };
     // 开始替换玫瑰图的数据
     option.legend.data = []

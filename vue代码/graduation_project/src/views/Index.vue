@@ -1,5 +1,5 @@
 <template>
-  <!-- <header>
+  <header>
     <TopTitle />
     <ShowTime />
   </header>
@@ -12,10 +12,10 @@
       <TotalCounts />
       <MapOfChina />
     </div>
-    <div class="column"> -->
-      <!-- <MinimumTransactionAmountCorrelation /> -->
+    <div class="column">
+      <MinimumTransactionAmountCorrelation />
       <!-- <PurchasingHeat /> -->
-      <!-- <TemperatureBand />
+      <TemperatureBand />
     </div>
   </section>
   <footer>
@@ -26,8 +26,7 @@
     <div class="column">
       <ShopScatterPlot />
     </div>
-  </footer> -->
-  <AllLevelTurnover/>
+  </footer>
 </template>
 
 <script setup>
@@ -163,7 +162,9 @@ header {
       // width: 100%;
     }
   }
+  
   // 单独把分析分离出来的 css 样式
+  //#region
   // .panel {
   //   margin-left: 50px;
   //   margin-top: 50px;
@@ -244,6 +245,7 @@ header {
   //     // width: 100%;
   //   }
   // }
+  //#endregion
 }
 footer {
   display: flex;

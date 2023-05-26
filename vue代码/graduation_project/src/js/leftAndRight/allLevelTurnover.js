@@ -222,7 +222,9 @@ export async function initAllLevelTurnover(secondLevelCounts, autoClick) {
                 graphic: [
                     {
                         type: "text",
-                        left: 120,
+                        left: 100,
+                        // 使 Y 轴出现单位所连带改的设置
+                        // left: 120,
                         top: 26,
                         style: {
                             text: "Back",
